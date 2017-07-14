@@ -14,6 +14,6 @@ trait ConfigModule {
 
 object App extends App with ConfigModule {
 
-  system.actorOf(AutoPartitionConsumer.props(ConfigFactory.load().getConfig("consumer")))
+  system.actorOf(AutoPartitionConsumer.props(List("userevents"), config.getConfig("consumer")))
 
 }

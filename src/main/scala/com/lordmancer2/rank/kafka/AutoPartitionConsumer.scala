@@ -54,6 +54,7 @@ class AutoPartitionConsumer(topics: List[String],
 
   private def processRecords(records: Seq[(Option[String], String)]) = {
     records.foreach { case (key, value) =>
+
       log.info(s"Received [$key,$value]")
     }
   }

@@ -1,0 +1,27 @@
+<configuration debug="true" scan="false" scanPeriod="60 seconds">
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <encoder>
+            <pattern>%date{ISO8601} %-5level %logger{36} %X{sourceThread} [%file:%line] - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="logstash" class="net.logstash.logback.appender.LogstashSocketAppender">
+        <host>logstash.marathon.mesos</host>
+        <port>23514</port>
+        <customFields>{"app": "${APP_NAME}", "env": "${APP_ENV}"}</customFields>
+    </appender>
+
+    <logger name="org.apache.kafka" level="WARN"/>
+    <logger name="org.apache.zookeeper" level="WARN"/>
+    <logger name="org.elasticsearch" level="WARN"/>
+
+    <root level="TRACE">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="logstash"/>
+    </root>
+
+</configuration>
